@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+#include "piece.h"
+
 struct Square{
      uint_least8_t x;
      uint_least8_t y;
@@ -10,10 +12,11 @@ struct Square{
 
 class boardC{
 public:
-     newBoard();
-     movePiece(Square from,Square to);
-     printboard();
+     void newBoard();
+     void movePiece(Square from,Square to);
+     void printboard();
      boardC();
+     ~boardC();
 
 private:
      piece** board;

@@ -7,5 +7,4 @@ HEADERS = board.h chess.h piece.h
 .PHONY = run
 
 run: $(OBJECTS) $(HEADERS)
-	g++ -o board $(OBJECTS)
-	./run
+	g++ -o board.exe $(OBJECTS)

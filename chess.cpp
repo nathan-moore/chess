@@ -1,17 +1,21 @@
 #include <iostream>
+#include <string>
 
-newgame()
+#include "board.h"
+
+void newgame()
 {
-     board Board;
-     Board::newgame();
+     boardC Board;
+     Board.newBoard();
 
      //0 for white's turn
      //1 for black
      bool turn = 0;
+     int input;
 
      while(true)
      {
-          string turn_name;
+          std::string turn_name;
           if(!turn)
           {
                turn_name = "white";
@@ -21,8 +25,10 @@ newgame()
                turn_name = "black";
           }
 
-          Board::printboard();
+          Board.printboard();
 
-          cout << "It is currently " << turn_name << "\'s turn" << std::endl;
+          std::cout << "It is currently " << turn_name << "\'s turn" << std::endl;
+          std::cin >> input;
+          return;
      }
 }

@@ -21,6 +21,7 @@ class pieces{
 public:
      const static piece empty = empty;
      class white{
+     public:
           const static piece pawn = wpawn;
           const static piece rook = wrook;
           const static piece bishop = wbishop;
@@ -30,6 +31,7 @@ public:
      };
 
      class black{
+     public:
           const static piece pawn = bpawn;
           const static piece rook = brook;
           const static piece bishop = bbishop;

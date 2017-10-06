@@ -7,32 +7,34 @@
 
 boardC::boardC()
 {
-     board = new[] (sizeof(*board) * 8);
+     board = new piece*[8];
      for(int i = 0;i < 8;i++)
      {
-          board[i] = new[] (sizeof(*board[i]) * 8);
+          board[i] = new piece[8];
           memset(board[i],pieces::empty,8);
      }
 }
 
-boardC::newBoard()
+void boardC::newBoard()
 {
-     for(int i = 2;i <= 5;i++)
+
+     for(int j = 0;j < 8;j++)
      {
-          memset(board[i],piece::empty,8);
+          board[1][j] = pieces::white::pawn;
+          board[6][j] = pieces::black::pawn;
      }
 
-     memset(board[1],pieces::white::pawn,8);
-     memset(board[6],pieces::black::pawn,8);
      for(int i = 0;i < 2;i++)
      {
           board[0][i * 7] = pieces::white::rook;
           board[0][1 + i * 5] = pieces::white::knight;
-          board[0][2 + i * 4] pieces::white::bishop;
+          board[0][2 + i * 3] = pieces::white::bishop;
 
           board[7][i * 7] = pieces::black::rook;
           board[7][1 + i * 5] = pieces::black::knight;
-          board[7][2 + i * 4] pieces::black::bishop;
+          board[7][2 + i * 3] = pieces::black::bishop;
+
+
      }
 
      board[0][3] = pieces::white::queen;
@@ -40,9 +42,15 @@ boardC::newBoard()
 
      board[7][3] = pieces::black::queen;
      board[7][4] = pieces::black::king;
+
+     for(int i = 2;i <= 5;i++)
+     {
+          memset(board[i],piece::empty,8);
+     }
+
 }
 
-boardC::movePiece(Square from,Square to)
+void boardC::movePiece(Square from,Square to)
 {
      //TODO check if move is valid
 
@@ -51,55 +59,55 @@ boardC::movePiece(Square from,Square to)
 
 }
 
-boardC::printboard()
+void boardC::printboard()
 {
-     for(int i = 7;i <= 0;i--)
+     for(int i = 7;i >= 0;i--)
      {
           for(int j = 0;j < 8;j++)
           {
                switch(board[i][j])
                {
-                    case pieces::empty : cout < " ";
+                    case pieces::empty : std::cout << " ";
                          break;
 
-                    case pieces::white::pawn : cout < "WP";
+                    case pieces::white::pawn : std::cout << "WP";
                          break;
-                    case pieces::black::pawn : cout < "BP";
-                         break;
-
-                    case pieces::white::rook : cout << "WR";
-                         break;
-                    case pieces::black::rook : cout << "BR";
+                    case pieces::black::pawn : std::cout << "BP";
                          break;
 
-                    case pieces::white::bishop : cout << "WB";
+                    case pieces::white::rook : std::cout << "WR";
                          break;
-                    case pieces::black::bishop : cout << "BB";
-                         break;
-
-                    case pieces::white::knight : cout << "WN";
-                         break;
-                    case pieces::black::knight : cout << "BN";
+                    case pieces::black::rook : std::cout << "BR";
                          break;
 
-                    case pieces::white::king : cout << "WK";
+                    case pieces::white::bishop : std::cout << "WB";
                          break;
-                    case pieces::black::king : cout << "BK";
+                    case pieces::black::bishop : std::cout << "BB";
                          break;
 
-                    case pieces::white::queen : cout << "WQ";
+                    case pieces::white::knight : std::cout << "WN";
                          break;
-                    case pieces::black::queen : cout << "BQ";
+                    case pieces::black::knight : std::cout << "BN";
+                         break;
+
+                    case pieces::white::king : std::cout << "WK";
+                         break;
+                    case pieces::black::king : std::cout << "BK";
+                         break;
+
+                    case pieces::white::queen : std::cout << "WQ";
+                         break;
+                    case pieces::black::queen : std::cout << "BQ";
                          break;
                }
 
-               cout << "  ";
+               std::cout << "  ";
           }
-          cout << std::endl;
+          std::cout << std::endl;
      }
 }
 
-boardC::&boardC()
+boardC::~boardC()
 {
      for(int i= 0;i < 8;i++)
      {
