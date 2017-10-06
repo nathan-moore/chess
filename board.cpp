@@ -1,4 +1,5 @@
 #include <cstring>
+#include <iostream>
 
 #include "piece.h"
 #include "board.h"
@@ -22,7 +23,7 @@ boardC::newBoard()
      }
 
      memset(board[1],pieces::white::pawn,8);
-     memset(board[6]),pieces::black::pawn,8);
+     memset(board[6],pieces::black::pawn,8);
      for(int i = 0;i < 2;i++)
      {
           board[0][i * 7] = pieces::white::rook;
