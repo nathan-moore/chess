@@ -50,7 +50,20 @@ void boardC::newBoard()
 
 int boardC::movePiece(Square from,Square to)
 {
-     //TODO check if move is valid
+     //piece movement valification
+     piece from = board[from.x][from.y];
+     fiece to = board[to.x][to.x];
+     if(to != pieces::empty)
+     {
+          return 1;
+     }
+
+     if(from == pieces::empty)
+     {
+          return 1;
+     }
+
+
 
      board[to.y][to.x] = board[from.y][from.x];
      board[from.y][from.x] = pieces::empty;
