@@ -7,11 +7,9 @@
 
 boardC::boardC()
 {
-     board = new piece*[8];
      for(int i = 0;i < 8;i++)
      {
-          board[i] = new piece[8];
-          memset(board[i],pieces::empty,8);
+          std::memset(board[i],pieces::empty,8);
      }
 }
 
@@ -50,7 +48,7 @@ void boardC::newBoard()
 
 }
 
-void boardC::movePiece(Square from,Square to)
+int boardC::movePiece(Square from,Square to)
 {
      //TODO check if move is valid
 
@@ -109,9 +107,5 @@ void boardC::printboard()
 
 boardC::~boardC()
 {
-     for(int i= 0;i < 8;i++)
-     {
-          delete[] board[i];
-     }
-     delete[] board;
+
 }

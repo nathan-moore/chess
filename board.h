@@ -19,7 +19,7 @@ public:
      ~boardC();
 
 private:
-     piece** board;
+     piece board[8][8];
 };
 
 #endif

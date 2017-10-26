@@ -6,7 +6,7 @@
 #include "board.h"
 
 int parse(std::string str,Square* to,Square* from);
-bool cmp(int x);
+bool _ValidXIndex(int x);
 
 void newgame()
 {
@@ -16,23 +16,14 @@ void newgame()
      //0 for white's turn
      //1 for black
      bool turn = 0;
-     int input;
 
      while(true)
      {
-          std::string turn_name;
-          if(!turn)
-          {
-               turn_name = "white";
-          }
-          else
-          {
-               turn_name = "black";
-          }
+          std::string turn_name[] = {"white","black"};
 
           Board.printboard();
 
-          std::cout << "It is currently " << turn_name << "\'s turn" << std::endl;
+          std::cout << "It is currently " << turn_name[(unsigned int)turn] << "\'s turn" << std::endl;
 
           std::string input;
           Square to;
@@ -40,14 +31,18 @@ void newgame()
           int status;
 
           do{
-               std::string temp;
-               std::getline(std::cin,temp);
                std::getline(std::cin,input);
-
                status = parse(input,&to,&from);
+
+               if(status == 0)
+               {
+                    status = Board.movePiece(from,to);
+               }
           }while(status != 0);
 
           std::cout << "I got here" << std::endl;
+
+          turn = !turn;
      }
 }
 
@@ -64,14 +59,14 @@ int parse(std::string str,Square* to,Square* from)
      from -> y = str[1] - '0';
      to -> y = str[4] - '0';
 
-     if(cmp(from -> x) || cmp(from -> y) || cmp(to -> x) || cmp(to -> y))
+     if(!_ValidXIndex(from -> x) || !_ValidXIndex(from -> y) || !_ValidXIndex(to -> x) || !_ValidXIndex(to -> y))
      {
           return 1;
      }
      return 0;
 }
 
-bool cmp(int x)
+bool _ValidXIndex(int x)
 {
-     return (x > 0) && (x < 8);
+     return (x >= 0) && (x < 8);
 }
