@@ -9,8 +9,15 @@ boardC::boardC()
 {
      for(int i = 0;i < 8;i++)
      {
-          std::memset(board[i],pieces::empty,8);
+          for(int j = 0; j < 8;j++)
+          {
+               board[i][j] = pieces::empty;
+          }
      }
+
+     Enpassant = false;
+     pawn.x = 0;
+     pawn.y - 0;
 }
 
 void boardC::newBoard()
@@ -48,26 +55,77 @@ void boardC::newBoard()
 
 }
 
-int boardC::movePiece(Square from,Square to)
+//bool is 0 for white
+int boardC::movePiece(Square from,Square to,bool turn)
 {
      //piece movement valification
-     piece from = board[from.x][from.y];
-     fiece to = board[to.x][to.x];
-     if(to != pieces::empty)
+     piece PFrom = board[from.x][from.y];
+     //piece PTo = board[to.x][to.x];
+
+     if(PFrom == pieces::empty)
      {
           return 1;
      }
 
-     if(from == pieces::empty)
+     //determines if the right color piece
+     if(turn == isWhite(PFrom))
      {
           return 1;
      }
 
-
+     switch(PFrom)
+     {
+          case pieces::white::pawn:
+          case pieces::black::pawn:
+               if(validPawnMove(from,to) == false)
+               {
+                    return 1;
+               }
+               break;
+          case pieces::white::rook:
+          case pieces::black::rook:
+               if(validLineMove(from,to) == false)
+               {
+                    return 1;
+               }
+               break;
+          case pieces::white::bishop:
+          case pieces::black::bishop:
+               if(validDiagMove(from,to) == false)
+               {
+                    return 1;
+               }
+               break;
+          case pieces::white::knight:
+          case pieces::black::knight:
+               if(validKnightMove(from,to) == false)
+               {
+                    return 1;
+               }
+               break;
+          case pieces::white::queen:
+          case pieces::black::queen:
+               if((validDiagMove(from,to) == false) && (validLineMove(from,to) == false))
+               {
+                    return 1;
+               }
+               break;
+          case pieces::white::king:
+          case pieces::black::king:
+               if(validKingMove(from,to) == false)
+               {
+                    return 1;
+               }
+               break;
+          default:
+               std::cout << "Error with logic in move switch statement\n";
+               exit(1);
+     }
 
      board[to.y][to.x] = board[from.y][from.x];
      board[from.y][from.x] = pieces::empty;
 
+     return 0;
 }
 
 void boardC::printboard()
@@ -116,6 +174,32 @@ void boardC::printboard()
           }
           std::cout << std::endl;
      }
+}
+
+bool boardC::validPawnMove(Square from,Square to)
+{
+     Square del = delta(from,to);
+     int color = getColor(from);
+     if(del.x * color > 2)
+     {
+          return false;
+     }
+
+     if(del.x * color = 2)
+     {
+          if((rom.x == 1 || from.x == 6) && del.y == 0)
+          {
+               return true;
+          }
+          else
+          {
+               return false;
+          }
+     }
+
+     //TODO check taking a piece
+
+
 }
 
 boardC::~boardC()

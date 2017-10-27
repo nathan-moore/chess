@@ -2,19 +2,19 @@
 #define piece_h
 
 enum piece{
-     empty,
-     wpawn,
-     bpawn,
-     wknight,
-     bknight,
-     wbishop,
-     bbishop,
-     wqueen,
-     bqueen,
-     wking,
-     bking,
-     wrook,
-     brook
+     empty = -1,
+     wpawn = 1,
+     bpawn = 11,
+     wknight = 2,
+     bknight = 12,
+     wbishop = 3,
+     bbishop = 13,
+     wqueen = 4,
+     bqueen = 14,
+     wking = 5,
+     bking = 15,
+     wrook = 6,
+     brook = 16
 };
 
 class pieces{
@@ -40,5 +40,8 @@ public:
           const static piece queen = bqueen;
      };
 };
+
+bool isWhite(piece);
+bool isBlack(piece);
 
 #endif

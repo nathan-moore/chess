@@ -36,11 +36,11 @@ void newgame()
 
                if(status == 0)
                {
-                    status = Board.movePiece(from,to);
+                    status = Board.movePiece(from,to,turn);
                }
           }while(status != 0);
 
-          std::cout << "I got here" << std::endl;
+
 
           turn = !turn;
      }
