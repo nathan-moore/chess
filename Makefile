@@ -1,12 +1,11 @@
 CC = g++
 CPPFLAGS = -Wall -Wshadow -Werror -g
-SOURCES = board.cpp chess.cpp main.cpp
+SOURCES = board.cpp chess.cpp main.cpp piece.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 HEADERS = board.h chess.h piece.h
 
-.PHONY = run
 
-run: $(OBJECTS) $(HEADERS)
+board.exe: $(OBJECTS) $(HEADERS)
 	g++ -o $(CPPGLAGS) board.exe $(OBJECTS)
 
 clean:

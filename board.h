@@ -6,8 +6,8 @@
 #include "piece.h"
 
 struct Square{
-     uint_least8_t x;
-     uint_least8_t y;
+     int_least8_t row;
+     int_least8_t column;
 };
 
 class boardC{
@@ -30,7 +30,7 @@ private:
      bool validKingMove(Square from, Square to);
 
      Square delta(Square from,Square to);
-     int getColar(Square);
+     int getColor(Square);
 };
 
 #endif

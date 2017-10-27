@@ -51,15 +51,15 @@ int parse(std::string str,Square* to,Square* from)
      std::transform(str.begin(),str.end(),str.begin(),::tolower);
 
      char first = str[0];
-     from -> x = first - 'a';
+     from -> column = first - 'a';
 
      first = str[3];
-     to -> x = first - 'a';
+     to -> column = first - 'a';
 
-     from -> y = str[1] - '0';
-     to -> y = str[4] - '0';
+     from -> row = str[1] - '0';
+     to -> row = str[4] - '0';
 
-     if(!_ValidXIndex(from -> x) || !_ValidXIndex(from -> y) || !_ValidXIndex(to -> x) || !_ValidXIndex(to -> y))
+     if(!_ValidXIndex(from -> row) || !_ValidXIndex(from -> column) || !_ValidXIndex(to -> row) || !_ValidXIndex(to -> column))
      {
           return 1;
      }

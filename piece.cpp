@@ -1,4 +1,4 @@
-#include <piece.h>
+#include "piece.h"
 
 bool isWhite(piece p)
 {
@@ -7,5 +7,5 @@ bool isWhite(piece p)
 
 bool isBlack(piece p)
 {
-     return p > 10 && piece < 20;
+     return p > 10 && p < 20;
 }

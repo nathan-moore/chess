@@ -1,5 +1,7 @@
 #include <cstring>
 #include <iostream>
+#include <cmath>
+#include <cassert>
 
 #include "piece.h"
 #include "board.h"
@@ -16,8 +18,8 @@ boardC::boardC()
      }
 
      Enpassant = false;
-     pawn.x = 0;
-     pawn.y - 0;
+     pawn.row = 0;
+     pawn.column = 0;
 }
 
 void boardC::newBoard()
@@ -59,7 +61,7 @@ void boardC::newBoard()
 int boardC::movePiece(Square from,Square to,bool turn)
 {
      //piece movement valification
-     piece PFrom = board[from.x][from.y];
+     piece PFrom = board[from.row][from.column];
      //piece PTo = board[to.x][to.x];
 
      if(PFrom == pieces::empty)
@@ -82,6 +84,7 @@ int boardC::movePiece(Square from,Square to,bool turn)
                     return 1;
                }
                break;
+          /*
           case pieces::white::rook:
           case pieces::black::rook:
                if(validLineMove(from,to) == false)
@@ -117,13 +120,14 @@ int boardC::movePiece(Square from,Square to,bool turn)
                     return 1;
                }
                break;
+               */
           default:
                std::cout << "Error with logic in move switch statement\n";
                exit(1);
      }
 
-     board[to.y][to.x] = board[from.y][from.x];
-     board[from.y][from.x] = pieces::empty;
+     board[to.row][to.column] = board[from.row][from.column];
+     board[from.row][from.column] = pieces::empty;
 
      return 0;
 }
@@ -136,7 +140,7 @@ void boardC::printboard()
           {
                switch(board[i][j])
                {
-                    case pieces::empty : std::cout << " ";
+                    case pieces::empty : std::cout << "  ";
                          break;
 
                     case pieces::white::pawn : std::cout << "WP";
@@ -180,14 +184,44 @@ bool boardC::validPawnMove(Square from,Square to)
 {
      Square del = delta(from,to);
      int color = getColor(from);
-     if(del.x * color > 2)
+
+     //can't move a pawn more then one space
+     if(del.row * color > 2)
      {
           return false;
      }
 
-     if(del.x * color = 2)
+     //moving two space
+     if(del.row * color == 2)
      {
-          if((rom.x == 1 || from.x == 6) && del.y == 0)
+          //if it's at the beginning row and there isn't a piece infromt of it
+          if((from.row == 1 || from.row == 6) && del.column == 0 && (from.row + color == piece::enpty))
+          {
+               Enpassant = true;
+               pawn.row = to.row - color;
+               pawn.column = to.column;
+
+               return true;
+          }
+          else
+          {
+               return false;
+          }
+     }
+
+     //if the piece just moves a single column
+     if(del.row * color == 1 && del.column == 0)
+     {
+          return true;
+     }
+
+     if(del.row * color == 1 && abs(del.column) == 1)
+     {
+          if(board[to.row][to.column] != pieces::empty)
+          {
+               return true;
+          }
+          else if(Enpassant == true && to.row == pawn.row && to.column == pawn.column)
           {
                return true;
           }
@@ -197,8 +231,31 @@ bool boardC::validPawnMove(Square from,Square to)
           }
      }
 
-     //TODO check taking a piece
+     return false;
+}
 
+int boardC::getColor(Square sq)
+{
+     piece p = board[sq.row][sq.column];
+
+     assert(p != pieces::empty);
+
+     if(isWhite(p) == true)
+     {
+          return 1;
+     }
+     else
+     {
+          return -1;
+     }
+}
+
+Square boardC::delta(Square from,Square to)
+{
+     Square rtn;
+     rtn.row = to.row - from.row;
+     rtn.column = to.column - from.column;
+     return rtn;
 
 }
 
