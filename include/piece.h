@@ -2,7 +2,7 @@
 #define piece_h
 
 enum piece{
-     empty = -1,
+     Pempty = -1,
      wpawn = 1,
      bpawn = 11,
      wknight = 2,
@@ -19,7 +19,7 @@ enum piece{
 
 class pieces{
 public:
-     const static piece empty = empty;
+     const static piece empty = Pempty;
      class white{
      public:
           const static piece pawn = wpawn;

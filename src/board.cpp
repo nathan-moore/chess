@@ -52,7 +52,7 @@ void boardC::newBoard()
 
      for(int i = 2;i <= 5;i++)
      {
-          memset(board[i],piece::empty,8);
+          memset(board[i],pieces::empty,8);
      }
 
 }
@@ -141,18 +141,24 @@ int boardC::validPawnMove(Square from,Square to)
      Square del = delta(from,to);
      int color = getColor(from);
 
-     //can't move a pawn more then one space
+     //can't move a pawn more then two spaces
      if(del.row * color > 2)
      {
+		 #ifdef DEBUG
+		 std::cout << "Trying to move a pawn more then one space\n";
+		 #endif
           return 0;
      }
 
-     //moving two space
+     //moving two spaces
      if(del.row * color == 2)
      {
           //if it's at the beginning row and there isn't a piece infront of it
-          if((from.row == 1 || from.row == 6) && del.column == 0 && (from.row + color == piece::empty))
+          if((from.row == 1 || from.row == 6) && del.column == 0 && isEmpty(board[from.row + color][to.column]))
           {
+			  #ifdef DEBUG
+			  std::cout << "Empassant" << '\n';
+			  #endif
                Enpassant = 2;
                pawn.row = to.row - color;
                pawn.column = to.column;
@@ -161,19 +167,24 @@ int boardC::validPawnMove(Square from,Square to)
           }
           else
           {
+			  #ifdef DEBUG
+			  std::cout << "trying to move 2 spaces when not possible" << '\n';
+			  printf("%d %d %d %d %d %d\n",from.row,del.column,from.row,color,pieces::empty,board[from.row + color][to.column] == pieces::empty);
+			  #endif
                return 0;
           }
      }
 
      //if the piece just moves a single column
-     if(del.row * color == 1 && del.column == 0)
+     if(del.row * color == 1 && del.column == 0 && isEmpty(to))
      {
           return 1;
      }
 
+	 //moves sideways
      if(del.row * color == 1 && abs(del.column) == 1)
      {
-          if(board[to.row][to.column] != pieces::empty)
+          if(isEmpty(board[to.row][to.column]))
           {
                return 1;
           }
@@ -186,6 +197,11 @@ int boardC::validPawnMove(Square from,Square to)
                return 0;
           }
      }
+
+	 //base case
+	 #ifdef DEBUG
+	 std::cout << "hit base case\n";
+	 #endif
 
      return 0;
 }
