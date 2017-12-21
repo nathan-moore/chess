@@ -34,6 +34,8 @@ private:
 
      Square delta(Square from,Square to);
      int getColor(Square);
+
+	 bool inline isEmpty(const Square &t);
 };
 
 #endif

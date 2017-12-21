@@ -6,7 +6,6 @@
 #include "piece.h"
 #include "board.h"
 
-
 boardC::boardC()
 {
      for(int i = 0;i < 8;i++)
@@ -139,7 +138,8 @@ int boardC::movePiece(Square from,Square to,bool turn)
 int boardC::validPawnMove(Square from,Square to)
 {
      Square del = delta(from,to);
-     int color = getColor(from);
+     int_least8_t color = getColor(from);
+	 Square infront = {.row = (int_least8_t)(from.row + color),.column = to.column};
 
      //can't move a pawn more then two spaces
      if(del.row * color > 2)
@@ -154,7 +154,7 @@ int boardC::validPawnMove(Square from,Square to)
      if(del.row * color == 2)
      {
           //if it's at the beginning row and there isn't a piece infront of it
-          if((from.row == 1 || from.row == 6) && del.column == 0 && isEmpty(board[from.row + color][to.column]))
+          if((from.row == 1 || from.row == 6) && del.column == 0 && isEmpty(infront))
           {
 			  #ifdef DEBUG
 			  std::cout << "Empassant" << '\n';
@@ -184,7 +184,7 @@ int boardC::validPawnMove(Square from,Square to)
 	 //moves sideways
      if(del.row * color == 1 && abs(del.column) == 1)
      {
-          if(isEmpty(board[to.row][to.column]))
+          if(isEmpty(infront))
           {
                return 1;
           }
@@ -283,4 +283,9 @@ Square boardC::delta(Square from,Square to)
 boardC::~boardC()
 {
 
+}
+
+bool inline boardC::isEmpty(const Square &t)
+{
+	return board[t.row][t.column] == pieces::empty;
 }
