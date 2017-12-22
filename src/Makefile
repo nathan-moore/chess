@@ -1,29 +1,18 @@
-CC := g++
-
-ODIR := ../objects
-SRCDIR := ../src
-INDIR = ../include
-
-$(shell mkdir -p $(ODIR) >/dev/null)
-
-COMPFLAGS = -I $(INDIR)
-CPPFLAGS := -Wall -Wshadow -Werror -g -std=gnu++11
-DEFINES := -D DEBUG
+TOINCLUDE := ../Makefile.inc
+include $(TOINCLUDE)
 
 SOURCES := board.cpp chess.cpp main.cpp piece.cpp
 OBJECTSC := $(SOURCES:.cpp=.o)
 HEADERSC := board.h chess.h piece.h
 FLAGS := $(COMPFLAGS) $(CPPFLAGS) $(DEFINES)
+LINKFLAGS := 
 
-OBJECTS := $(addprefix $(ODIR)/,$(OBJECTSC))
-HEADERS := $(addprefix $(INDIR)/,$(HEADERSC))
-
-board.exe: $(OBJECTS) $(HEADERS) Makefile
+board.exe: $(OBJECTS)
 	$(CC) $(FLAGS) -o  board.exe $(OBJECTS)
 
-$(ODIR)/%.o: %.cpp $(INDIR)/$(HEADERS) Makefile
+$(ODIR)/%.o: $(SRCDIR)/%.cpp $(HEADERS)
 	$(CC) $(FLAGS) -o $@ $< -c
 
 clean:
-	del board.exe
-	del $(ODIR)/*.o
+	rm board.exe
+	rm  $(ODIR)/*.o
