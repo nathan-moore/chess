@@ -1,23 +1,18 @@
-include ./Makefile.inc
+TOINCLUDE := ./Makefile.inc
+include $(TOINCLUDE)
 
-EXEC := board.exe
-TESTOBJS :=
-EXPANDED := $()#todo make a tester and put in actual numbers
-.PHONY: exec test all
+TESTFILES := pawnTest.exe
+.PHONY: exec clean
 
-all:
-	echo "$(ROOT)"
-	echo "$(CC)"
-	echo $(test)
-
+#makes the chess game executable
 exec:
-	@make -C $(SRCDIR) $(EXEC)
+	@$(MAKE) -C $(SRCDIR) $(EXEC)
 
-board.exe:testobj
-	$(CC) $(FLAGS) -o $(ODIR)/$(BOARDOBJ).o $(SRC)/$(BOARDOBJ).c
-	$(CC) $(LINKFLAGS)
+$(TESTFILES):
+	@$(MAKE) -C $(TESTDIR) $@
+	./$@
 
-testobj:
-	@for file in $(TESTOBJS); do \
-		@make -c $(SRCDIR); \
-	done
+clean:
+	rm -f $(EXEC)
+	rm -f $(TESTFILES)
+	make -C $(SRCDIR) clean
