@@ -3,7 +3,6 @@ SRCFILES := $(SRCPAWNOBJS)
 
 LPAWNOBJS := test.o
 SRCPAWNOBJS := board.o piece.o
-empty := adf
 
 FPATHSRC := $(addprefix $(ODIR), $(SRCPAWNOBJS))
 PAWNALLOBJS := $(addprefix $(ODIR), $(LPAWNOBJS)) $(FPATHSRC)
@@ -25,4 +24,4 @@ $(ODIR)%.o:%.cpp $(LHEADERS)
 $(ROOT)pawnTest.exe:
 	$(eval compiled += $@)
 
-.PHONY:$(FPATHSRC)
+.PHONY:$(FPATHSRC) pawnTest.exe
