@@ -56,6 +56,14 @@ void boardC::newBoard()
 
 }
 
+void boardC::setBoard(const piece from[8][8])
+{
+	for(int i = 0;i < 8;++i)
+	{
+		std::memcpy(board[i],from[i],sizeof(piece) * 8);
+	}
+}
+
 //bool is 0 for white
 int boardC::movePiece(Square from,Square to,bool turn)
 {
@@ -288,4 +296,10 @@ boardC::~boardC()
 bool inline boardC::isEmpty(const Square &t)
 {
 	return board[t.row][t.column] == pieces::empty;
+}
+
+void Square::print()
+{
+	std::cout << "row: " << row << std::endl;
+	std::cout << "column: " << column << std::endl;
 }

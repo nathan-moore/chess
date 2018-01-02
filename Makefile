@@ -1,15 +1,20 @@
-TOINCLUDE := ./Makefile.inc
-include $(TOINCLUDE)
+TOINCLUDE := Makefile.mk
+MAKEFILES :=  $(dir $(realpath $(TOINCLUDE)))$(TOINCLUDE)
+MAKEFLAGS += --no-print-directory
+
+include $(MAKEFILES)
+
+export compiled 
 
 TESTFILES := pawnTest.exe
-.PHONY: exec clean
+.PHONY: exec clean $(TESTFILES)
 
 #makes the chess game executable
 exec:
-	@$(MAKE) -C $(SRCDIR) $(EXEC)
+	$(call recurse,$(SRCDIR),$(EXEC))
 
 $(TESTFILES):
-	@$(MAKE) -C $(TESTDIR) $@
+	$(call recurse,$(TESTDIR),$@)
 	./$@
 
 clean:
