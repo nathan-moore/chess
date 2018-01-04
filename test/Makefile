@@ -25,4 +25,4 @@ $(ODIR)%.o:%.cpp $(LHEADERS)
 $(ROOT)pawnTest.exe:
 	$(eval compiled += $@)
 
-.PHONY:$(FPATHSRC)
+.PHONY:$(FPATHSRC) pawnTest.exe
